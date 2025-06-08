@@ -21,7 +21,7 @@ use crate::{ CATBOX_API_URL, UASTRING, helper::* };
 /// # Arguments
 ///
 /// * `file_path` - Path to the file to be uploaded
-/// * `user_hash` - User's account hash, required for deleting. (Optional)
+/// * `user_hash` - User account hash, required for deletions. Otherwise optional.
 pub async fn from_file<S: Into<String>>(file_path: S, user_hash: S) -> Result<String> {
     let file_path = file_path.into();
     let file = file_stream(&file_path).await?;
@@ -44,16 +44,16 @@ pub async fn from_file<S: Into<String>>(file_path: S, user_hash: S) -> Result<St
     )
 }
 
-/// Upload contents from an URL to catbox
+/// Upload contents from a URL to catbox
 ///
-/// Returns an URL to the file
+/// Returns n URL to the file
 ///
 /// See <https://catbox.moe/faq.php> for allowed formats and content.
 ///
 /// # Arguments
 ///
 /// * `url` - URL to file
-/// * `user_hash` - User's account hash, required for deleting. (Optional)
+/// * `user_hash` - User account hash, required for deletions. Otherwise optional.
 pub async fn from_url<S: Into<String>>(url: S, user_hash: S) -> Result<String> {
     let form = [
         ("reqtype", "urlupload"),
@@ -79,8 +79,8 @@ pub async fn from_url<S: Into<String>>(url: S, user_hash: S) -> Result<String> {
 ///
 /// # Arguments
 ///
-/// * `user_hash` - User's account hash
 /// * `files` - Names of the files to be deleted
+/// * `user_hash` - User account hash, required for deletions. Otherwise optional.
 pub async fn delete<S: Into<String>>(files: Vec<S>, user_hash: S) -> Result<String> {
     let files: Vec<_> = files.into_iter().map(Into::into).collect();
 

@@ -75,19 +75,22 @@ async fn upload(upload_args: Upload) -> Result<()> {
     let (files, rest): (Vec<_>, _) = upload_args.files
         .into_iter()
         .partition(|uri| Path::new(&uri).exists());
+
     let (urls, rest): (Vec<_>, _) = rest.iter().partition(|uri| Url::parse(uri).is_ok());
+
     let user = upload_args.user_hash;
+
     let print_result = |res| async move { println!("{res}") };
 
     tokio::join!(
         rest
             .into_iter()
-            .map(|uri| invalid_uri(uri.to_string()))
+            .map(invalid_uri)
             .collect::<FuturesUnordered<_>>()
             .for_each_concurrent(10, print_result),
         urls
             .into_iter()
-            .map(|url| upload_url(url.to_string(), &user))
+            .map(|url| upload_url(url.into(), &user))
             .collect::<FuturesUnordered<_>>()
             .for_each_concurrent(10, print_result),
         files
@@ -100,18 +103,20 @@ async fn upload(upload_args: Upload) -> Result<()> {
     Ok(())
 }
 
-async fn invalid_uri(uri: String) -> String {
-    format!("Ignoring {uri}: invalid path or URL")
+async fn invalid_uri<S: Into<String>>(uri: S) -> String {
+    format!("Ignoring {}: invalid path or URL", uri.into())
 }
 
-async fn upload_file(file: String, user_hash: &String) -> String {
-    file::from_file(file.clone(), user_hash.to_string()).await.unwrap_or_else(|_|
+async fn upload_file<S: Into<String>>(file: String, user_hash: S) -> String {
+    file::from_file(&file, &user_hash.into()).await.unwrap_or_else(|_|
         format!("Uploading {file} failed.")
     )
 }
 
-async fn upload_url(url: String, user_hash: &String) -> String {
-    file::from_url(&url, user_hash).await.unwrap_or_else(|_| format!("Uploading {url} failed."))
+async fn upload_url<S: Into<String>>(url: String, user_hash: S) -> String {
+    file::from_url(&url, &user_hash.into()).await.unwrap_or_else(|_|
+        format!("Uploading {url} failed.")
+    )
 }
 
 async fn upload_to_litter(file_path: String, time: u8) -> String {

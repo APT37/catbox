@@ -2,7 +2,7 @@
 
 See [FAQ](https://catbox.moe/faq.php) for allowed filetypes/content.
 
-*Please consider supporting catbox.moe by donating through [Ko-fi](https://ko-fi.com/catboxmoe) or purchasing items from the [merch store](https://store.catbox.moe/) (also supports direct donations) to help with server costs.*
+*Please consider supporting catbox.moe by donating through [Ko-fi](https://ko-fi.com/catboxmoe) or by purchasing items from the [merch store](https://store.catbox.moe/) (also supports direct donations) to help with the server costs.*
 
 <!-- For the library documentation, see [Github Pages](https://savolae.github.io/catbox/catbox/index.html). -->
 

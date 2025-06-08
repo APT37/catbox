@@ -17,7 +17,7 @@ use super::{ CATBOX_API_URL, UASTRING };
 ///
 /// * `title` - Album title
 /// * `desc` - Album description
-/// * `user_hash` - User's account hash, required for deleting or editing. (Optional)
+/// * `user_hash` - User account hash, required for deletiions and edits. Otherwise optional.
 /// * `files` - List of existing files on Catbox to be added to the album
 pub async fn create<S: Into<String>>(
     title: S,
@@ -60,7 +60,7 @@ pub async fn create<S: Into<String>>(
 /// * `title` - Album title
 /// * `desc` - Album description
 /// * `files` - List of existing files on Catbox to be included in the album
-/// * `user_hash` - User's account hash
+/// * `user_hash` - User account hash, required for edits.
 pub async fn edit<S: Into<String>>(
     short: S,
     title: S,
@@ -98,7 +98,7 @@ pub async fn edit<S: Into<String>>(
 /// # Arguments
 ///
 /// * `short` - ID of the album
-/// * `user_hash` - User's account hash
+/// * `user_hash` - User account hash, required for adding files to albums.
 /// * `files` - List of existing files on Catbox to be added to the album
 pub async fn add_files<S: Into<String>>(short: S, user_hash: S, files: Vec<S>) -> Result<String> {
     let files: Vec<_> = files.into_iter().map(Into::into).collect();
@@ -129,7 +129,7 @@ pub async fn add_files<S: Into<String>>(short: S, user_hash: S, files: Vec<S>) -
 /// # Arguments
 ///
 /// * `short` - ID of the album
-/// * `user_hash` - User's account hash
+/// * `user_hash` - User account hash, required for removing files from albums.
 /// * `files` - List of existing files on Catbox to be removed from the album
 pub async fn remove_files<S: Into<String>>(
     short: S,
@@ -164,7 +164,7 @@ pub async fn remove_files<S: Into<String>>(
 /// # Arguments
 ///
 /// * `short` - ID of the album
-/// * `user_hash` - User's account hash
+/// * `user_hash` - User account hash, required for deleting albums.
 pub async fn delete<S: Into<String>>(short: S, user_hash: S) -> Result<String> {
     let form = [
         ("reqtype", "deletealbum"),
