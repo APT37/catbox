@@ -1,0 +1,4 @@
+var searchIndex = new Map(JSON.parse('[["catbox",{"t":"CCCHHHHHHHHH","n":["album","file","litter","add_files","create","delete","edit","remove_files","delete","from_file","from_url","upload"],"q":[[0,"catbox"],[3,"catbox::album"],[8,"catbox::file"],[11,"catbox::litter"],[12,"alloc::vec"],[13,"alloc::string"],[14,"anyhow"],[15,"core::convert"]],"i":"````````````","f":"```{{cc{b{c}}}{{f{d}}}{{h{d}}}}{{ccc{b{c}}}{{f{d}}}{{h{d}}}}{{cc}{{f{d}}}{{h{d}}}}{{cccc{b{c}}}{{f{d}}}{{h{d}}}}3{{{b{c}}c}{{f{d}}}{{h{d}}}}22{{cj}{{f{d}}}{{h{d}}}}","D":"Aj","p":[[5,"Vec",12],[5,"String",13],[8,"Result",14],[10,"Into",15,null,1],[1,"u8"]],"r":[],"b":[],"c":"OjAAAAAAAAA=","e":"OjAAAAAAAAA=","P":[[3,"S"]]}]]'));
+if (typeof exports !== 'undefined') exports.searchIndex = searchIndex;
+else if (window.initSearch) window.initSearch(searchIndex);
+//{"start":39,"fragment_lengths":[655]}
