@@ -2,7 +2,7 @@ name: Run Tests
 
 on:
   push:
-    branches: [ '*' ]
+    branches: ["*"]
 
 env:
   CARGO_TERM_COLOR: always
@@ -11,13 +11,12 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     environment: catbox
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: cargo build --verbose
-    - name: Run tests
-      run: cargo test --verbose
+      - uses: actions/checkout@v2
+      - name: Build
+        run: cargo build --verbose
+      - name: Run tests
+        run: cargo test --verbose
