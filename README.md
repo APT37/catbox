@@ -1,4 +1,4 @@
-## CLI and library wrapper for the [catbox API](https://catbox.moe/tools.php)
+# CLI and library wrapper for the [catbox API](https://catbox.moe/tools.php)
 
 See [FAQ](https://catbox.moe/faq.php) for allowed filetypes/content.
 
@@ -6,13 +6,13 @@ See [FAQ](https://catbox.moe/faq.php) for allowed filetypes/content.
 
 <!-- For the library documentation, see [Github Pages](https://savolae.github.io/catbox/catbox/index.html). -->
 
-<!-- ### Installation -->
+## Installation
 
-<!-- See [Releases](https://github.com/APT/catbox/releases) for the latest Windows and Linux builds of the command line tool. -->
+See [Releases](https://github.com/APT/catbox/releases) for the latest Windows and Linux builds of the command line tool.
 
 <!-- Arch users may install via the [AUR](/AUR.md). -->
 
-### Authentication
+## Authentication
 
 Some commands require a authentication (via [userhash](https://catbox.moe/user/manage.php)). This can be set using both the `CATBOX_USER_HASH` environment variable or the `--user` argument.
 
@@ -20,7 +20,7 @@ The `--user` argument takes precedence over the environment variable.
 
 *Uploads without a userhash are anonymous.*
 
-### Commands
+## Commands
 
 All successful commands return the verbatim server response, usually a link to the given file or album, or an error.
 
@@ -41,7 +41,7 @@ The `album` subcommand has additional subcommands:
 - `add` files to an existing album
 - `remove` files from an existing album
 
-### Examples
+## Examples
 
 Authentication (via userhash)
 The user argument is not needed if `CATBOX_USER_HASH` is found in environment.
