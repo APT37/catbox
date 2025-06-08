@@ -2,15 +2,15 @@
 
 See [FAQ](https://catbox.moe/faq.php) for allowed filetypes/content.
 
-*Please consider supporting catmox.moe by donating through [Ko-fi](https://ko-fi.com/catboxmoe) or purchasing items from the [merch store](https://store.catbox.moe/) (also supports direct donations) to help with server costs.*
+*Please consider supporting catbox.moe by donating through [Ko-fi](https://ko-fi.com/catboxmoe) or purchasing items from the [merch store](https://store.catbox.moe/) (also supports direct donations) to help with server costs.*
 
 <!-- For the library documentation, see [Github Pages](https://savolae.github.io/catbox/catbox/index.html). -->
 
-### Installation
+<!-- ### Installation -->
 
-See [Releases](https://github.com/APT/catbox/releases) for the latest Windows and Linux builds of the command line tool.
+<!-- See [Releases](https://github.com/APT/catbox/releases) for the latest Windows and Linux builds of the command line tool. -->
 
-Arch users may install via the [AUR](/AUR.md).
+<!-- Arch users may install via the [AUR](/AUR.md). -->
 
 ### Authentication
 
