@@ -4,7 +4,7 @@ See [FAQ](https://catbox.moe/faq.php) for allowed filetypes/content.
 
 *Please consider supporting catbox.moe by donating through [Ko-fi](https://ko-fi.com/catboxmoe) or by purchasing items from the [merch store](https://store.catbox.moe/) (also supports direct donations) to help with the server costs.*
 
-<!-- For the library documentation, see [Github Pages](https://savolae.github.io/catbox/catbox/index.html). -->
+<!-- For the library documentation, see [Github Pages](https://apt37.github.io/catbox/catbox/index.html). -->
 
 ## Installation
 
@@ -26,7 +26,7 @@ All successful commands return the verbatim server response, usually a link to t
 
 `catbox <cmd>`
 
-- `upload` local files or URLs (userhash optional)
+- `upload` local files or URLs (authentication optional)
 - `delete` files
 - `album` see below
 - `litter` see examples
@@ -35,16 +35,13 @@ The `album` subcommand has additional subcommands:
 
 `catbox album <album_cmd>`
 
-- `create` a new album (userhash optional)
+- `create` a new album (authentication optional)
 - `delete` an existing album
 - `edit` an existing album
 - `add` files to an existing album
 - `remove` files from an existing album
 
 ## Examples
-
-Authentication (via userhash)
-The user argument is not needed if `CATBOX_USER_HASH` is found in environment.
 
 Upload a file:
 
