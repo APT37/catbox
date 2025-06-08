@@ -1,3 +1,5 @@
+#![allow(clippy::missing_errors_doc)]
+
 //! Unofficial library implementing catbox.moe's API in Rust
 //!
 //! Separates funtionalities into three modules:
@@ -22,5 +24,5 @@ static UASTRING: &str = concat!(
     env!("CARGO_PKG_NAME"),
     "/",
     env!("CARGO_PKG_VERSION"),
-    " (CLI tool endorsed on the tools page) - Savolae"
+    " (CLI tool NOT endorsed on the tools page :3) ~ APT37"
 );

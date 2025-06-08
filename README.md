@@ -1,87 +1,94 @@
-Unofficial command line tool and library for using [catbox.moe](https://catbox.moe)'s API.
+## CLI and library wrapper for the [catbox API](https://catbox.moe/tools.php)
 
-For the library documentation, see [Github Pages](https://savolae.github.io/catbox/catbox/index.html).
+See [FAQ](https://catbox.moe/faq.php) for allowed filetypes/content.
 
-# Install
+*Please consider supporting catmox.moe by donating through [Ko-fi](https://ko-fi.com/catboxmoe) or purchasing items from the [merch store](https://store.catbox.moe/) (also supports direct donations) to help with server costs.*
 
-See the [GitHub Releases page](https://github.com/Savolae/catbox/releases) for the latest Linux and Windows builds of the command line tool.
+<!-- For the library documentation, see [Github Pages](https://savolae.github.io/catbox/catbox/index.html). -->
 
-You can compile and install the command line tool with Cargo:
-```
-cargo install catbox
-```
+### Installation
 
-To use the library in your project, add the repo to your Cargo.toml:
-```
-[dependencies]
-catbox = "*"
-```
+See [Releases](https://github.com/APT/catbox/releases) for the latest Windows and Linux builds of the command line tool.
 
-# Usage
+Arch users may install via the [AUR](/AUR.md).
 
-Use `catbox --help` to see usage.
+### Authentication
 
-Catbox has the following commands:
-- upload: Upload a file or URL to Catbox.
-- delete: Delete files
-- album: Album commands
-- litter: Upload a temporary file to Litterbox.
+Some commands require a authentication (via [userhash](https://catbox.moe/user/manage.php)). This can be set using both the `CATBOX_USER_HASH` environment variable or the `--user` argument.
 
-If user hash is not given for `upload`, the files will be uploaded anonymously.
-Deleting files requires that user hash was given.
+The `--user` argument takes precedence over the environment variable.
+
+*Uploads without a userhash are anonymous.*
+
+### Commands
+
+All successful commands return the verbatim server response, usually a link to the given file or album, or an error.
+
+`catbox <cmd>`
+
+- `upload` local files or URLs (userhash optional)
+- `delete` files
+- `album` see below
+- `litter` see examples
 
 The `album` subcommand has additional subcommands:
-- create: Create a new album
-- delete: Delete an album
-- edit: Edit an album
-- add: Add files to an album
-- remove: Remove files from an album
 
-All album commands except `create` require an user hash.
+`catbox album <album_cmd>`
 
-You can use `--help` on any command to see information about its usage.
+- `create` a new album (userhash optional)
+- `delete` an existing album
+- `edit` an existing album
+- `add` files to an existing album
+- `remove` files from an existing album
 
-The basic `upload` command will work with both local files and URLs to files hosted somewhere else.
+### Examples
 
-Some commands require an account hash to work. This can be supplied using
-the `--user` argument or by setting `CATBOX_USER_HASH` environment value.
-The explicitly provided argument will be preferred over the environment variable.
-If the environment variable is set, it will be used even when optional.
-
-All commands print the response from the server, usually a link to the created file or album.
-
-See <https://catbox.moe/tools.php> for more information about the API and
-<https://catbox.moe/faq.php> for allowed filetypes and content.
-
-Consider donating via <https://www.patreon.com/catbox> to help with server costs.
-
-# Examples
+Authentication (via userhash)
+The user argument is not needed if `CATBOX_USER_HASH` is found in environment.
 
 Upload a file:
+
 ```
 catbox upload cute_picture.png
 ```
 
 Upload multiple files:
+
 ```
 catbox upload *.jpg  # Upload all jpg files
 catbox upload image.png file.txt  # Upload image.png and file.txt
 ```
 
 Delete a file:
+
 ```
 catbox delete abc123.jpg --user 1234567890123456789012345
 catbox delete https://files.catbox.moe/123456.png  # Or just 123456.png
 ```
 
 Create an album:
+
 ```
 catbox album create --title 'My album' --desc 'An excellent album' abc123.jpg def456.png
 ```
 
-The user argument is not needed if `CATBOX_USER_HASH` is found in environment.
 
 Upload a file to Litterbox for 3 days:
+
 ```
 catbox litter --time 72h homework.zip
 ```
+
+<!-- ### Library -->
+
+<!-- You can compile and install the command line tool with Cargo:
+```
+cargo install catbox
+```
+
+To use the library in your project, add the repo to your Cargo.toml:
+
+```
+[dependencies]
+catbox = "*"
+``` -->

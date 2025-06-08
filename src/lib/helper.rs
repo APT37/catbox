@@ -1,7 +1,10 @@
-//! Helper functions for handling files
-use std::{error::Error, path::Path};
+#![allow(clippy::missing_errors_doc)]
 
+//! Helper functions for handling files
+
+use anyhow::Result;
 use reqwest::Body;
+use std::path::Path;
 use tokio::fs::File;
 use tokio_util::io::ReaderStream;
 
@@ -10,10 +13,8 @@ use tokio_util::io::ReaderStream;
 /// # Arguments
 ///
 /// * `file_path` - Path to the file
-pub async fn file_stream(file_path: &str) -> Result<Body, Box<dyn Error>> {
-    Ok(Body::wrap_stream(ReaderStream::new(
-        File::open(file_path).await?,
-    )))
+pub async fn file_stream(file_path: &str) -> Result<Body> {
+    Ok(Body::wrap_stream(ReaderStream::new(File::open(file_path).await?)))
 }
 
 /// Strip off the directory and return the file's name and extension
@@ -22,10 +23,5 @@ pub async fn file_stream(file_path: &str) -> Result<Body, Box<dyn Error>> {
 ///
 /// * `file_path` - Path to the file
 pub fn file_name(file_path: &str) -> String {
-    Path::new(file_path)
-        .file_name()
-        .unwrap()
-        .to_os_string()
-        .into_string()
-        .unwrap_or_default()
+    Path::new(file_path).file_name().unwrap().to_os_string().into_string().unwrap_or_default()
 }

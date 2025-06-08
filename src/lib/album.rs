@@ -1,12 +1,13 @@
+#![allow(clippy::missing_errors_doc)]
+
 //! Functions for handling albums through Catbox's API
 //!
 //! Calls API described at <https://catbox.moe/tools.php>.
 
-use std::error::Error;
-
+use anyhow::Result;
 use reqwest::Client;
 
-use super::{CATBOX_API_URL, UASTRING};
+use super::{ CATBOX_API_URL, UASTRING };
 
 /// Create a new album
 ///
@@ -21,32 +22,29 @@ use super::{CATBOX_API_URL, UASTRING};
 pub async fn create<S: Into<String>>(
     title: S,
     desc: S,
-    user_hash: Option<S>,
-    files: Vec<S>,
-) -> Result<String, Box<dyn Error>> {
-    let files: Vec<_> = files.into_iter().map(|file| file.into()).collect();
+    user_hash: S,
+    files: Vec<S>
+) -> Result<String> {
+    let files: Vec<_> = files.into_iter().map(Into::into).collect();
+
     let form = [
         ("reqtype", "createalbum"),
-        (
-            "userhash",
-            &user_hash
-                .and_then(|hash| Some(hash.into()))
-                .unwrap_or_default(),
-        ),
+        ("userhash", &user_hash.into()),
         ("title", &title.into()),
         ("desc", &desc.into()),
         ("files", &files.join(" ")),
     ];
-    Ok(Client::builder()
-        .user_agent(UASTRING)
-        .build()
-        .unwrap_or_else(|_| Client::new())
-        .post(CATBOX_API_URL)
-        .form(&form)
-        .send()
-        .await?
-        .text()
-        .await?)
+
+    Ok(
+        Client::builder()
+            .user_agent(UASTRING)
+            .build()
+            .unwrap_or_else(|_| Client::new())
+            .post(CATBOX_API_URL)
+            .form(&form)
+            .send().await?
+            .text().await?
+    )
 }
 
 /// Edit an album
@@ -68,9 +66,10 @@ pub async fn edit<S: Into<String>>(
     title: S,
     desc: S,
     user_hash: S,
-    files: Vec<S>,
-) -> Result<String, Box<dyn Error>> {
-    let files: Vec<_> = files.into_iter().map(|file| file.into()).collect();
+    files: Vec<S>
+) -> Result<String> {
+    let files: Vec<_> = files.into_iter().map(Into::into).collect();
+
     let form = [
         ("reqtype", "editalbum"),
         ("userhash", &user_hash.into()),
@@ -79,16 +78,17 @@ pub async fn edit<S: Into<String>>(
         ("desc", &desc.into()),
         ("files", &files.join(" ")),
     ];
-    Ok(Client::builder()
-        .user_agent(UASTRING)
-        .build()
-        .unwrap_or_else(|_| Client::new())
-        .post(CATBOX_API_URL)
-        .form(&form)
-        .send()
-        .await?
-        .text()
-        .await?)
+
+    Ok(
+        Client::builder()
+            .user_agent(UASTRING)
+            .build()
+            .unwrap_or_else(|_| Client::new())
+            .post(CATBOX_API_URL)
+            .form(&form)
+            .send().await?
+            .text().await?
+    )
 }
 
 /// Add files to an album
@@ -100,28 +100,26 @@ pub async fn edit<S: Into<String>>(
 /// * `short` - ID of the album
 /// * `user_hash` - User's account hash
 /// * `files` - List of existing files on Catbox to be added to the album
-pub async fn add_files<S: Into<String>>(
-    short: S,
-    user_hash: S,
-    files: Vec<S>,
-) -> Result<String, Box<dyn Error>> {
-    let files: Vec<_> = files.into_iter().map(|file| file.into()).collect();
+pub async fn add_files<S: Into<String>>(short: S, user_hash: S, files: Vec<S>) -> Result<String> {
+    let files: Vec<_> = files.into_iter().map(Into::into).collect();
+
     let form = [
         ("reqtype", "addtoalbum"),
         ("short", &short.into()),
         ("userhash", &user_hash.into()),
         ("files", &files.join(" ")),
     ];
-    Ok(Client::builder()
-        .user_agent(UASTRING)
-        .build()
-        .unwrap_or_else(|_| Client::new())
-        .post(CATBOX_API_URL)
-        .form(&form)
-        .send()
-        .await?
-        .text()
-        .await?)
+
+    Ok(
+        Client::builder()
+            .user_agent(UASTRING)
+            .build()
+            .unwrap_or_else(|_| Client::new())
+            .post(CATBOX_API_URL)
+            .form(&form)
+            .send().await?
+            .text().await?
+    )
 }
 
 /// Remove files from an album
@@ -136,25 +134,27 @@ pub async fn add_files<S: Into<String>>(
 pub async fn remove_files<S: Into<String>>(
     short: S,
     user_hash: S,
-    files: Vec<S>,
-) -> Result<String, Box<dyn Error>> {
-    let files: Vec<_> = files.into_iter().map(|file| file.into()).collect();
+    files: Vec<S>
+) -> Result<String> {
+    let files: Vec<_> = files.into_iter().map(Into::into).collect();
+
     let form = [
         ("reqtype", "removefromalbum"),
         ("userhash", &user_hash.into()),
         ("short", &short.into()),
         ("files", &files.join(" ")),
     ];
-    Ok(Client::builder()
-        .user_agent(UASTRING)
-        .build()
-        .unwrap_or_else(|_| Client::new())
-        .post(CATBOX_API_URL)
-        .form(&form)
-        .send()
-        .await?
-        .text()
-        .await?)
+
+    Ok(
+        Client::builder()
+            .user_agent(UASTRING)
+            .build()
+            .unwrap_or_else(|_| Client::new())
+            .post(CATBOX_API_URL)
+            .form(&form)
+            .send().await?
+            .text().await?
+    )
 }
 
 /// Delete an album
@@ -165,20 +165,21 @@ pub async fn remove_files<S: Into<String>>(
 ///
 /// * `short` - ID of the album
 /// * `user_hash` - User's account hash
-pub async fn delete<S: Into<String>>(short: S, user_hash: S) -> Result<String, Box<dyn Error>> {
+pub async fn delete<S: Into<String>>(short: S, user_hash: S) -> Result<String> {
     let form = [
         ("reqtype", "deletealbum"),
         ("userhash", &user_hash.into()),
         ("short", &short.into()),
     ];
-    Ok(Client::builder()
-        .user_agent(UASTRING)
-        .build()
-        .unwrap_or_else(|_| Client::new())
-        .post(CATBOX_API_URL)
-        .form(&form)
-        .send()
-        .await?
-        .text()
-        .await?)
+
+    Ok(
+        Client::builder()
+            .user_agent(UASTRING)
+            .build()
+            .unwrap_or_else(|_| Client::new())
+            .post(CATBOX_API_URL)
+            .form(&form)
+            .send().await?
+            .text().await?
+    )
 }

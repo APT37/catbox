@@ -1,4 +1,7 @@
-use clap::{Args, Parser, Subcommand};
+#![allow(clippy::missing_errors_doc)]
+
+use anyhow::{ Result, bail };
+use clap::{ Args, Parser, Subcommand };
 
 #[derive(Debug, PartialEq, Subcommand)]
 pub enum CatboxCommand {
@@ -11,13 +14,13 @@ pub enum CatboxCommand {
 #[derive(Debug, PartialEq, Subcommand)]
 pub enum AlbumCommand {
     Create(AlbumCreate),
-    Edit(AlbumEdit),
     Add(AlbumAdd),
+    Edit(AlbumEdit),
     Remove(AlbumRemove),
     Delete(AlbumDelete),
 }
 
-#[derive(Parser, Debug)]
+#[derive(Debug, Parser)]
 #[command(
     about = "Unofficial catbox.moe CLI",
     version,
@@ -31,16 +34,19 @@ pub struct CatboxArgs {
         global = true,
         short,
         long = "user",
-        help = "Catbox API user hash. Read from CATBOX_USER_HASH env variable if not provided."
+        help = "Catbox API user hash. Read from CATBOX_USER_HASH env variable if not provided.",
+        default_value = "",
+        env = "CATBOX_USER_HASH"
     )]
-    pub user_hash: Option<String>,
+    pub user_hash: String,
 }
 
 #[derive(Debug, PartialEq, Args)]
-#[command(about = "Upload to Catbox. Max size 200MB.")]
+#[command(about = "Upload to Catbox. Max. size 200MB.")]
 pub struct Upload {
     #[arg(from_global)]
-    pub user_hash: Option<String>,
+    pub user_hash: String,
+
     #[arg(num_args(1..), help = "URLs or paths of the files to upload")]
     pub files: Vec<String>,
 }
@@ -49,8 +55,9 @@ pub struct Upload {
 #[command(about = "Delete files")]
 pub struct Delete {
     #[arg(from_global)]
-    pub user_hash: Option<String>,
-    #[arg(num_args(1..), help = "IDs the files to delete")]
+    pub user_hash: String,
+
+    #[arg(num_args(1..), help = "IDs of the files to delete")]
     pub files: Vec<String>,
 }
 
@@ -62,24 +69,24 @@ pub struct Album {
 }
 
 #[derive(Debug, PartialEq, Args)]
-#[command(about = "Upload a temporary file to Litterbox. Max size 1GB.")]
+#[command(about = "Upload a temporary file to Litterbox. Max. size 1GB.")]
 pub struct Litter {
     #[arg(short, long, help = "Hours to keep the file", value_parser = valid_hour)]
     pub time: Option<u8>,
+
     #[arg(num_args(1..), help = "Paths of the files to upload")]
     pub files: Vec<String>,
 }
 
-fn valid_hour(hour: &str) -> Result<u8, String> {
-    let hour: u8 = hour
-        .parse()
-        .map_err(|_| format!("{hour} is not a valid number"))?;
-    if [1, 12, 24, 72].contains(&hour) {
-        Ok(hour)
+fn valid_hour(hour: &str) -> Result<u8> {
+    if let Ok(hour) = hour.parse::<u8>() {
+        if [1, 12, 24, 72].contains(&hour) {
+            Ok(hour)
+        } else {
+            bail!("{hour} is not a valid value (Options: 1, 12, 24, 72")
+        }
     } else {
-        Err(format!(
-            "{hour} is not a valid value (Options: 1, 12, 24, 72"
-        ))
+        bail!("{hour} is not a valid number");
     }
 }
 
@@ -88,10 +95,13 @@ fn valid_hour(hour: &str) -> Result<u8, String> {
 pub struct AlbumCreate {
     #[arg(short, long, help = "Title of the album")]
     pub title: String,
+
     #[arg(short, long, alias = "desc", help = "Description of the album")]
     pub description: Option<String>,
+
     #[arg(from_global)]
-    pub user_hash: Option<String>,
+    pub user_hash: String,
+
     #[arg(num_args(1..), help = "Catbox IDs of the files to add to the album")]
     pub files: Vec<String>,
 }
@@ -101,12 +111,16 @@ pub struct AlbumCreate {
 pub struct AlbumEdit {
     #[arg(short, long, help = "Catbox ID of the album to edit")]
     pub short: String,
+
     #[arg(short, long, help = "Title of the album")]
     pub title: String,
+
     #[arg(short, long, alias = "desc", help = "Description of the album")]
     pub description: Option<String>,
+
     #[arg(from_global)]
-    pub user_hash: Option<String>,
+    pub user_hash: String,
+
     #[arg(num_args(1..), help = "Catbox IDs of the files the album should contain")]
     pub files: Vec<String>,
 }
@@ -116,8 +130,10 @@ pub struct AlbumEdit {
 pub struct AlbumAdd {
     #[arg(short, long, help = "Catbox ID of the album to edit")]
     pub short: String,
+
     #[arg(from_global)]
-    pub user_hash: Option<String>,
+    pub user_hash: String,
+
     #[arg(num_args(1..), help = "Catbox IDs of the files to add to the album")]
     pub files: Vec<String>,
 }
@@ -127,8 +143,10 @@ pub struct AlbumAdd {
 pub struct AlbumRemove {
     #[arg(short, long, help = "Catbox ID of the album to edit")]
     pub short: String,
+
     #[arg(from_global)]
-    pub user_hash: Option<String>,
+    pub user_hash: String,
+
     #[arg(num_args(1..), help = "Catbox IDs of the files to remove from the album")]
     pub files: Vec<String>,
 }
@@ -137,7 +155,8 @@ pub struct AlbumRemove {
 #[command(about = "Delete an album")]
 pub struct AlbumDelete {
     #[arg(from_global)]
-    pub user_hash: Option<String>,
+    pub user_hash: String,
+
     #[arg(help = "Catbox ID of the album to delete")]
     pub short: String,
 }
