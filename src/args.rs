@@ -25,51 +25,51 @@ pub enum AlbumCommand {
 pub struct CatboxArgs {
     #[command(subcommand)]
     pub command: CatboxCommand,
+
     #[arg(
         global = true,
         short,
         long = "user",
-        help = "Catbox API user hash.",
-        env = "CATBOX_USER_HASH",
-        default_value = ""
+        help = "Catbox user hash",
+        env = "CATBOX_USER_HASH"
     )]
-    pub user_hash: String,
+    pub user_hash: Option<String>,
 }
 
 #[derive(Debug, PartialEq, Args)]
-#[command(about = "Upload to Catbox (max. 200MB)")]
+#[command(about = "Upload to Catbox (max. 200MB)", arg_required_else_help(true))]
 pub struct Upload {
     #[arg(from_global)]
     pub user_hash: String,
 
-    #[arg(num_args(1..), help = "URLs or paths of the files to upload")]
+    #[arg(num_args(1..), help = "File paths or URLs")]
     pub files: Vec<String>,
 }
 
 #[derive(Debug, PartialEq, Args)]
-#[command(about = "Delete files")]
+#[command(about = "Delete files", arg_required_else_help(true))]
 pub struct Delete {
     #[arg(from_global)]
     pub user_hash: String,
 
-    #[arg(num_args(1..), help = "IDs of the files to delete")]
+    #[arg(num_args(1..), help = "File IDs")]
     pub files: Vec<String>,
 }
 
 #[derive(Debug, PartialEq, Args)]
-#[command(about = "Album commands")]
+#[command(about = "Album commands", arg_required_else_help(true))]
 pub struct Album {
     #[command(subcommand)]
     pub album_command: AlbumCommand,
 }
 
 #[derive(Debug, PartialEq, Args)]
-#[command(about = "Upload a temporary file to Litterbox (max. 1GB)")]
+#[command(about = "Upload a temporary file to Litterbox (max. 1GB)", arg_required_else_help(true))]
 pub struct Litter {
     #[arg(short, long, help = "File lifetime in hours", value_parser = valid_hour)]
     pub time: Option<u8>,
 
-    #[arg(num_args(1..), help = "Paths of the files to upload")]
+    #[arg(num_args(1..), help = "File paths")]
     pub files: Vec<String>,
 }
 
@@ -86,44 +86,44 @@ fn valid_hour(hour: &str) -> Result<u8> {
 }
 
 #[derive(Debug, PartialEq, Args)]
-#[command(about = "Create a new album")]
+#[command(about = "Create an album", arg_required_else_help(true))]
 pub struct AlbumCreate {
-    #[arg(short, long, help = "Title of the album")]
+    #[arg(short, long, help = "Album title")]
     pub title: String,
 
-    #[arg(short, long, alias = "desc", help = "Description of the album")]
+    #[arg(short, long, alias = "desc", help = "Album description")]
     pub description: Option<String>,
 
     #[arg(from_global)]
     pub user_hash: String,
 
-    #[arg(num_args(1..), help = "Catbox IDs of the files to add to the album")]
+    #[arg(num_args(1..), help = "File IDs")]
     pub files: Vec<String>,
 }
 
 #[derive(Debug, PartialEq, Args)]
-#[command(about = "Edit an album")]
+#[command(about = "Edit an album", arg_required_else_help(true))]
 pub struct AlbumEdit {
-    #[arg(short, long, help = "Catbox ID of the album to edit")]
+    #[arg(short, long, help = "Album ID")]
     pub short: String,
 
-    #[arg(short, long, help = "Title of the album")]
+    #[arg(short, long, help = "Album title")]
     pub title: String,
 
-    #[arg(short, long, alias = "desc", help = "Description of the album")]
+    #[arg(short, long, alias = "desc", help = "Album description")]
     pub description: Option<String>,
 
     #[arg(from_global)]
     pub user_hash: String,
 
-    #[arg(num_args(1..), help = "Catbox IDs of the files the album should contain")]
+    #[arg(num_args(1..), help = "Album ID")]
     pub files: Vec<String>,
 }
 
 #[derive(Debug, PartialEq, Args)]
-#[command(about = "Add files to an album")]
+#[command(about = "Add files to an album", arg_required_else_help(true))]
 pub struct AlbumAdd {
-    #[arg(short, long, help = "Catbox ID of the album to edit")]
+    #[arg(short, long, help = "Album ID")]
     pub short: String,
 
     #[arg(from_global)]
@@ -134,9 +134,9 @@ pub struct AlbumAdd {
 }
 
 #[derive(Debug, PartialEq, Args)]
-#[command(about = "Remove files from an album")]
+#[command(about = "Remove files from an album", arg_required_else_help(true))]
 pub struct AlbumRemove {
-    #[arg(short, long, help = "Catbox ID of the album to edit")]
+    #[arg(short, long, help = "Album ID")]
     pub short: String,
 
     #[arg(from_global)]
@@ -147,11 +147,11 @@ pub struct AlbumRemove {
 }
 
 #[derive(Debug, PartialEq, Args)]
-#[command(about = "Delete an album")]
+#[command(about = "Delete an album", arg_required_else_help(true))]
 pub struct AlbumDelete {
     #[arg(from_global)]
     pub user_hash: String,
 
-    #[arg(help = "Catbox ID of the album to delete")]
+    #[arg(help = "Album ID")]
     pub short: String,
 }

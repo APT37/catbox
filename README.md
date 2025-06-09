@@ -1,4 +1,4 @@
-# CLI and library wrapper for the [catbox API](https://catbox.moe/tools.php)
+# CLI and library wrapper for the [Catbox API](https://catbox.moe/tools.php)
 
 See [FAQ](https://catbox.moe/faq.php) for allowed filetypes/content.
 
