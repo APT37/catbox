@@ -1,4 +1,4 @@
-name: Make documents
+name: Make documentation
 
 on:
   push:
