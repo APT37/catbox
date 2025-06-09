@@ -10,7 +10,7 @@ See [FAQ](https://catbox.moe/faq.php) for allowed filetypes/content.
 
 See [Releases](https://github.com/APT/catbox/releases) for the latest Windows and Linux builds of the command line tool.
 
-<!-- Arch users may install via the [AUR](/AUR.md). -->
+Arch users may install via the [AUR](/AUR.md).
 
 ## Authentication
 
