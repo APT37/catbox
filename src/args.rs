@@ -21,12 +21,7 @@ pub enum AlbumCommand {
 }
 
 #[derive(Debug, Parser)]
-#[command(
-    about = "Unofficial catbox.moe CLI",
-    version,
-    propagate_version = true,
-    arg_required_else_help(true)
-)]
+#[command(about = "Unofficial Catbox.moe CLI", version)]
 pub struct CatboxArgs {
     #[command(subcommand)]
     pub command: CatboxCommand,
@@ -34,15 +29,15 @@ pub struct CatboxArgs {
         global = true,
         short,
         long = "user",
-        help = "Catbox API user hash. Read from CATBOX_USER_HASH env variable if not provided.",
-        default_value = "",
-        env = "CATBOX_USER_HASH"
+        help = "Catbox API user hash.",
+        env = "CATBOX_USER_HASH",
+        default_value = ""
     )]
     pub user_hash: String,
 }
 
 #[derive(Debug, PartialEq, Args)]
-#[command(about = "Upload to Catbox. Max. size 200MB.")]
+#[command(about = "Upload to Catbox (max. 200MB)")]
 pub struct Upload {
     #[arg(from_global)]
     pub user_hash: String,
@@ -69,9 +64,9 @@ pub struct Album {
 }
 
 #[derive(Debug, PartialEq, Args)]
-#[command(about = "Upload a temporary file to Litterbox. Max. size 1GB.")]
+#[command(about = "Upload a temporary file to Litterbox (max. 1GB)")]
 pub struct Litter {
-    #[arg(short, long, help = "Hours to keep the file", value_parser = valid_hour)]
+    #[arg(short, long, help = "File lifetime in hours", value_parser = valid_hour)]
     pub time: Option<u8>,
 
     #[arg(num_args(1..), help = "Paths of the files to upload")]
