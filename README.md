@@ -12,6 +12,10 @@ See [Releases](https://github.com/APT/catbox/releases) for the latest Windows an
 
 Arch users may install via the [AUR](/AUR.md).
 
+Installing via `cargo install --git=https://github.com/APT/catbox` is also possible, but be aware that `clang` and `mold` are required for linking on Linux.
+
+*There is no support for building from source on Windows, but it should work just fine.*
+
 ## Authentication
 
 Some commands require a authentication (via [userhash](https://catbox.moe/user/manage.php)). This can be set using both the `CATBOX_USER_HASH` environment variable or the `--user` argument.
