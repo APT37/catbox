@@ -1,8 +1,9 @@
-<h2>CLI and library wrapper for the [Catbox API][tools]</h2>
+<h2>CLI and library wrapper for the <a href="https://catbox.moe/tools.php">Catbox API</a></h2>
 
-See [FAQ](https://catbox.moe/faq.php) for allowed filetypes/content.
+See [FAQ][faq] for allowed filetypes and content.
 
 *Please consider supporting Catbox.moe by donating through [Ko-fi][kofi] or by purchasing items from the [merch store][store] (also supports direct donations) to help with the server costs.*
+
 - [Installation](#installation)
   - [AUR](#aur)
   - [Binaries](#binaries)
@@ -119,6 +120,7 @@ catbox-ng = "*"
 <!-- link definitions -->
 
 [tools]: https://catbox.moe/tools.php
+[faq]: https://catbox.moe/faq.php
 [kofi]: https://ko-fi.com/catboxmoe
 [store]: https://store.catbox.moe/
 [manage]: https://catbox.moe/user/manage.php
