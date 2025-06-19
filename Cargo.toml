@@ -1,5 +1,5 @@
 [package]
-name = "catbox"
+name = "catbox-ng"
 description = "Implementation of Catbox.moe's API"
 version = "0.9.2"
 edition = "2024"
@@ -10,6 +10,14 @@ documentation = "https://github.com/APT37/catbox"
 license = "MIT-0"
 keywords = ["api", "upload", "catbox"]
 categories = ["command-line-utilities", "api-bindings"]
+
+[lib]
+name = "catbox"
+path = "src/lib/lib.rs"
+
+[[bin]]
+name = "catbox"
+path = "src/main.rs"
 
 [dependencies]
 anyhow = "1.0.*"
@@ -27,14 +35,6 @@ url = "2.5.*"
 
 [dev-dependencies]
 tempfile = "3.20.*"
-
-[lib]
-name = "catbox"
-path = "src/lib/lib.rs"
-
-[[bin]]
-name = "catbox"
-path = "src/main.rs"
 
 [profile.dev]
 opt-level = 0

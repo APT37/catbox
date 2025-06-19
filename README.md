@@ -1,24 +1,46 @@
-# CLI and library wrapper for the [Catbox API](https://catbox.moe/tools.php)
+<h2>CLI and library wrapper for the [Catbox API][tools]</h2>
 
 See [FAQ](https://catbox.moe/faq.php) for allowed filetypes/content.
 
-*Please consider supporting Catbox.moe by donating through [Ko-fi](https://ko-fi.com/catboxmoe) or by purchasing items from the [merch store](https://store.catbox.moe/) (also supports direct donations) to help with the server costs.*
-
-<!-- For the library documentation, see [Github Pages](https://apt37.github.io/catbox/catbox/index.html). -->
+*Please consider supporting Catbox.moe by donating through [Ko-fi][kofi] or by purchasing items from the [merch store][store] (also supports direct donations) to help with the server costs.*
+- [Installation](#installation)
+  - [AUR](#aur)
+  - [Binaries](#binaries)
+  - [From Source (with cargo)](#from-source-with-cargo)
+- [Authentication](#authentication)
+- [Commands](#commands)
+- [Examples](#examples)
+- [Library](#library)
 
 ## Installation
 
-See [Releases](https://github.com/APT/catbox/releases) for the latest Windows and Linux builds of the command line tool.
+### AUR
 
-Arch users may install via the [AUR](/AUR.md).
+Arch users may install one of our [AUR packages](AUR.md).
 
-Installing via `cargo install --git=https://github.com/APT/catbox` is also possible, but be aware that `clang` and `mold` are required for linking on Linux.
+### Binaries
 
-*There is no support for building from source on Windows, but it should work just fine.*
+Pre-built binaries for Windows and Linux are available for every [release][releases].
+
+### From Source (with cargo)
+
+```fish
+# 1. build dependencies
+sudo apt-get install git rustup
+
+# 2. Rust toolchain
+rustup default stable
+
+# 3a. latest release (via crates.io)
+cargo install catbox-ng
+
+# 3b. latest commit (via GitHub)
+cargo install --git=https://github.com/APT37/catbox
+```
 
 ## Authentication
 
-Some commands require a authentication (via [userhash](https://catbox.moe/user/manage.php)). This can be set using both the `CATBOX_USER_HASH` environment variable or the `--user` argument.
+Some commands require a authentication (via [userhash][manage]). This can be set using both the `CATBOX_USER_HASH` environment variable or the `--user` argument.
 
 The `--user` argument takes precedence over the environment variable.
 
@@ -80,16 +102,25 @@ Upload a file to Litterbox for 3 days:
 catbox litter --time 72h homework.zip
 ```
 
-<!-- ### Library -->
+## Library
 
-<!-- You can compile and install the command line tool with Cargo:
+You can compile and install the command line tool with Cargo:
 ```
-cargo install catbox
+cargo install catbox-ng
 ```
 
 To use the library in your project, add the repo to your Cargo.toml:
 
 ```
 [dependencies]
-catbox = "*"
-``` -->
+catbox-ng = "*"
+```
+
+<!-- link definitions -->
+
+[tools]: https://catbox.moe/tools.php
+[kofi]: https://ko-fi.com/catboxmoe
+[store]: https://store.catbox.moe/
+[manage]: https://catbox.moe/user/manage.php
+
+[releases]: https://github.com/APT/catbox/releases
