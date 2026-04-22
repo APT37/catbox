@@ -125,4 +125,4 @@ catbox-ng = "*"
 [store]: https://store.catbox.moe/
 [manage]: https://catbox.moe/user/manage.php
 
-[releases]: https://github.com/APT/catbox/releases
+[releases]: https://github.com/APT37/catbox/releases
