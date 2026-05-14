@@ -1,3 +1,6 @@
+> [!NOTE]
+> The code still works as of 14.05.2026, but I have no time to maintain this project.
+
 <h2>CLI and library wrapper for the <a href="https://catbox.moe/tools.php">Catbox API</a></h2>
 
 See [FAQ][faq] for allowed filetypes and content.
